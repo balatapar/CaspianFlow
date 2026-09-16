@@ -46,41 +46,25 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
 
-      - name: Build APK Strategy
+      - name: Build APK with Flet
         run: |
-          # پچ کردن باگ pubspec فlet-charts در site-packages قبل از بیلد
+          # Patch flet-charts pubspec before build
           python scripts/patch_flet_charts_pubspec.py
           
-          # ساخت پروژه فلاتر توسط flet (بدون بیلد خودکار APK)
-          yes | flet build --verbose
+          # Build APK using flet
+          yes | flet build apk --verbose
           
-          # پیدا کردن پروژه فلاتر تولید شده
-          FLUTTER_DIR=$(find . -maxdepth 3 -type f -name "pubspec.yaml" -not -path "*/.*" -exec dirname {} \; | head -n 1)
-          
-          if [ -z "$FLUTTER_DIR" ]; then
-            echo "ERROR: Flutter project not found."
+          # Find and move the generated APK
+          mkdir -p build/apk
+          APK_PATH=$(find . -maxdepth 4 -type f -name "*.apk" -not -path "*/build/apk/*" | head -n 1)
+          if [ -n "$APK_PATH" ]; then
+            mv "$APK_PATH" build/apk/CaspianFlow-release.apk
+            echo "APK moved to build/apk/CaspianFlow-release.apk"
+            ls -lh build/apk/
+          else
+            echo "ERROR: APK not found after build."
             exit 1
           fi
-          
-          echo "Found Flutter project at $FLUTTER_DIR"
-          cd "$FLUTTER_DIR"
-          
-          # پچ کردن pubspec در پروژه تولیدشده
-          python "$GITHUB_WORKSPACE/scripts/patch_flet_charts_pubspec.py" || true
-          
-          # ساخت جداگانه APK برای هر معماری (arm64-v8a, armeabi-v7a, x86_64)
-          flutter pub get
-          flutter build apk --release --split-per-abi
-          
-          cd "$GITHUB_WORKSPACE"
-          mkdir -p build/apk
-          
-          # کپی کردن همه APKهای تولید شده
-          find "$FLUTTER_DIR/build/app/outputs/flutter-apk" -name "*.apk" -exec cp {} build/apk/ \;
-          
-          # لیست APKهای تولید شده
-          echo "Generated APKs:"
-          ls -lh build/apk/
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4.4.0
@@ -88,7 +72,7 @@ jobs:
           name: CaspianWeather-APK
           path: build/apk/*.apk
 
-      - name: Create GitHub Release with APKs
+      - name: Create GitHub Release with APK
         uses: softprops/action-gh-release@v1
         with:
           tag_name: build-${{ github.sha }}
