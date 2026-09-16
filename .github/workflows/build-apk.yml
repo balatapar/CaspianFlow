@@ -45,17 +45,28 @@ jobs:
           pip install flet
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Build APK
+      - name: Build APK with Flet Strategy
         run: |
+          # اجرای بیلد اولیه جهت تولید ساختار Flutter
           flet build apk --verbose || true
+          
+          # بررسی وجود فایل APK یا پروژه فلاتر تولید شده
           if [ ! -f build/apk/*.apk ]; then
-            echo "Fallback to direct Flutter build..."
-            flet create --template app .flet_temp
-            cd .flet_temp
-            flutter build apk --release
-            cd ..
-            mkdir -p build/apk
-            cp .flet_temp/build/app/outputs/flutter-apk/app-release.apk build/apk/CaspianFlow-release.apk
+            echo "Searching for generated Flutter template..."
+            FLUTTER_DIR=$(find build -type f -name "pubspec.yaml" -exec dirname {} \;)
+            
+            if [ -n "$FLUTTER_DIR" ]; then
+              echo "Found Flutter project at $FLUTTER_DIR"
+              cd "$FLUTTER_DIR"
+              flutter pub get
+              flutter build apk --release
+              cd "$GITHUB_WORKSPACE"
+              mkdir -p build/apk
+              cp "$FLUTTER_DIR/build/app/outputs/flutter-apk/app-release.apk" build/apk/CaspianFlow-release.apk
+            else
+              echo "ERROR: Flutter project template not found."
+              exit 1
+            fi
           fi
 
       - name: Upload APK Artifact
