@@ -1,0 +1,126 @@
+584 INFO: Flet client found in cache: C:\Users\Ebi\.flet\client\flet-desktop-full-0.86.5
+3940 INFO: PyInstaller: 6.22.0, contrib hooks: 2026.6
+3941 INFO: Python: 3.14.7
+3993 INFO: Platform: Windows-11-10.0.26200-SP0
+3993 INFO: Python environment: C:\Users\Ebi\AppData\Local\Programs\Python\Python314
+3994 INFO: wrote C:\Users\Ebi\workspace\weather_app\CaspianWeather.spec
+4000 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Scripts\\flet.EXE',
+ 'C:\\Users\\Ebi\\AppData\\Local\\Temp\\hermes_sandbox_bkkt3mv2',
+ 'C:\\Users\\Ebi\\AppData\\Local\\hermes\\hermes-agent',
+ 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\python314.zip',
+ 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\DLLs',
+ 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib',
+ 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314',
+ 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages',
+ 'C:\\Users\\Ebi\\workspace\\weather_app']
+4467 INFO: Appending 'datas' from .spec
+4468 INFO: checking Analysis
+4468 INFO: Building Analysis because Analysis-00.toc is non existent
+4469 INFO: Looking for Python shared library...
+4469 INFO: Using Python shared library: C:\Users\Ebi\AppData\Local\Programs\Python\Python314\python314.dll
+4469 INFO: Running Analysis Analysis-00.toc
+4469 INFO: Target bytecode optimization level: 0
+4469 INFO: Initializing module dependency graph...
+4470 INFO: Initializing module graph hook caches...
+4497 INFO: Analyzing modules for base_library.zip ...
+5574 INFO: Processing standard module hook 'hook-math.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+7082 INFO: Processing standard module hook 'hook-encodings.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+7740 INFO: Processing standard module hook 'hook-pickle.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+8508 INFO: Processing standard module hook 'hook-difflib.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+8531 INFO: Processing standard module hook 'hook-heapq.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+13871 INFO: Caching module dependency graph...
+13933 INFO: Analyzing C:\Users\Ebi\workspace\weather_app\main.py
+14325 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+14521 INFO: Processing standard module hook 'hook-xml.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+15222 INFO: Processing standard module hook 'hook-sysconfig.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+15233 INFO: Processing standard module hook 'hook-_ctypes.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+16207 INFO: Processing standard module hook 'hook-flet.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\flet_cli\\__pyinstaller'
+17134 INFO: Processing standard module hook 'hook-platform.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+17189 INFO: Processing standard module hook 'hook-webbrowser.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+17527 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+17529 INFO: SetuptoolsInfo: initializing cached setuptools info...
+20405 INFO: Processing standard module hook 'hook-certifi.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+20676 INFO: Processing standard module hook 'hook-anyio.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+23438 INFO: Processing standard module hook 'hook-pygments.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+24949 INFO: Processing standard module hook 'hook-chardet.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+26864 INFO: Processing standard module hook 'hook-rich.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+31239 INFO: Processing pre-safe-import-module hook 'hook-tomli.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+31240 INFO: Setuptools: 'tomli' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.tomli'!
+31257 INFO: Processing standard module hook 'hook-setuptools.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+31293 INFO: Processing pre-safe-import-module hook 'hook-distutils.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+31366 INFO: Processing pre-safe-import-module hook 'hook-jaraco.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+31368 INFO: Setuptools: 'jaraco' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.jaraco'!
+31391 INFO: Processing pre-safe-import-module hook 'hook-more_itertools.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+31392 INFO: Setuptools: 'more_itertools' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.more_itertools'!
+31756 INFO: Processing standard module hook 'hook-_osx_support.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+31796 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+32558 INFO: Processing standard module hook 'hook-setuptools._vendor.jaraco.text.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+32561 INFO: Processing pre-safe-import-module hook 'hook-importlib_resources.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+32582 INFO: Processing pre-safe-import-module hook 'hook-backports.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+32583 INFO: Setuptools: 'backports' appears to be a full setuptools-vendored copy - creating alias to 'setuptools._vendor.backports'!
+34928 INFO: Processing pre-safe-import-module hook 'hook-wheel.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+34929 INFO: Setuptools: 'wheel' appears to be a setuptools-vendored copy - creating alias to 'setuptools._vendor.wheel'!
+35394 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+35722 INFO: Processing standard module hook 'hook-numpy.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+41067 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+41783 INFO: Processing standard module hook 'hook-PIL.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+42037 INFO: Processing standard module hook 'hook-PIL.Image.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+42673 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+43174 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+44678 INFO: Processing standard module hook 'hook-urllib3.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+45907 INFO: Processing standard module hook 'hook-cryptography.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+47663 INFO: hook-cryptography: cryptography does not seem to be using dynamically linked OpenSSL.
+48745 INFO: Processing standard module hook 'hook-pydantic.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+50402 INFO: Processing standard module hook 'hook-zoneinfo.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+59292 INFO: Processing standard module hook 'hook-websockets.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+62017 INFO: Processing module hooks (post-graph stage)...
+64070 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks'
+69655 INFO: Processing standard module hook 'hook-tzdata.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+70300 INFO: Performing binary vs. data reclassification (630 entries)
+70471 INFO: Looking for ctypes DLLs
+70619 INFO: Analyzing run-time hooks ...
+70634 INFO: Including run-time hook 'pyi_rth_inspect.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+70641 INFO: Including run-time hook 'pyi_rth_setuptools.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+70644 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+70649 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+70655 INFO: Including run-time hook 'pyi_rth_cryptography_openssl.py' from 'C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\rthooks'
+70729 INFO: Creating base_library.zip...
+70768 INFO: Looking for dynamic libraries
+74321 INFO: Extra DLL search directories (AddDllDirectory): ['C:\\Users\\Ebi\\AppData\\Local\\Programs\\Python\\Python314\\Lib\\site-packages\\numpy.libs']
+74321 INFO: Extra DLL search directories (PATH): []
+75390 INFO: Warnings written to C:\Users\Ebi\workspace\weather_app\build\CaspianWeather\warn-CaspianWeather.txt
+75722 INFO: Graph cross-reference written to C:\Users\Ebi\workspace\weather_app\build\CaspianWeather\xref-CaspianWeather.html
+75853 INFO: checking PYZ
+75853 INFO: Building PYZ because PYZ-00.toc is non existent
+75853 INFO: Building PYZ (ZlibArchive) C:\Users\Ebi\workspace\weather_app\build\CaspianWeather\PYZ-00.pyz
+77225 INFO: Building PYZ (ZlibArchive) C:\Users\Ebi\workspace\weather_app\build\CaspianWeather\PYZ-00.pyz completed successfully.
+77309 INFO: checking PKG
+77309 INFO: Building PKG because PKG-00.toc is non existent
+77309 INFO: Building PKG (CArchive) CaspianWeather.pkg
+84355 INFO: Building PKG (CArchive) CaspianWeather.pkg completed successfully.
+84376 INFO: Bootloader C:\Users\Ebi\AppData\Local\Programs\Python\Python314\Lib\site-packages\PyInstaller\bootloader\Windows-64bit-intel\runw.exe
+84377 INFO: checking EXE
+84377 INFO: Building EXE because EXE-00.toc is non existent
+84377 INFO: Building EXE from EXE-00.toc
+84377 INFO: Copying bootloader EXE to C:\Users\Ebi\workspace\weather_app\dist\CaspianWeather.exe
+84383 INFO: Copying icon to EXE
+84388 INFO: Copying version information to EXE
+84394 INFO: Copying 0 resources to EXE
+84394 INFO: Embedding manifest in EXE
+84397 INFO: Appending PKG archive to EXE
+84481 INFO: Fixing EXE headers
+85334 INFO: Building EXE from EXE-00.toc completed successfully.
+85374 INFO: Build complete! The results are available in: C:\Users\Ebi\workspace\weather_app\dist
+Updating Flet View icon C:\Users\Ebi\AppData\Local\Temp\64d2d20a-3c28-4534-ad45-ffbbbebbfb38\flet\flet.exe C:\Users\Ebi\workspace\weather_app\assets\branding\caspian-weather.ico
+Copying icons from C:\Users\Ebi\workspace\weather_app\assets\branding\caspian-weather.ico
+Writing RT_GROUP_ICON %d resource with %d bytes 101 90
+Writing RT_ICON %d resource with %d bytes 1 612
+Writing RT_ICON %d resource with %d bytes 2 1607
+Writing RT_ICON %d resource with %d bytes 3 2978
+Writing RT_ICON %d resource with %d bytes 4 4820
+Writing RT_ICON %d resource with %d bytes 5 15792
+Writing RT_ICON %d resource with %d bytes 6 61363
+Updating Flet View version info C:\Users\Ebi\AppData\Local\Temp\64d2d20a-3c28-4534-ad45-ffbbbebbfb38\flet\flet.exe
+Running PyInstaller: ['main.py', '--noconfirm', '--noconsole', '--icon', 'assets\\branding\\caspian-weather.ico', '--name', 'CaspianWeather', '--distpath', 'dist', '--add-data', 'assets:assets', '--onefile', '--version-file', 'C:\\Users\\Ebi\\AppData\\Local\\Temp\\e94b778e-3e18-4b15-8a8f-113cad286537']
+Deleting temp directory: C:\Users\Ebi\AppData\Local\Temp\64d2d20a-3c28-4534-ad45-ffbbbebbfb38
