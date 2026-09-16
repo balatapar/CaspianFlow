@@ -33,16 +33,19 @@ jobs:
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - name: Prepare Python Pip & Install Flet
+      - name: Install PyInstaller and Flet Global
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install "pyinstaller>=6.10.0,<7" --prefer-binary
           pip install flet
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Build APK with Flet (Auto-Confirm)
+      - name: Build APK with Flet
+        env:
+          PIP_PREFER_BINARY: "1"
+          PIP_EXTRA_INDEX_URL: "https://pypi.org/simple"
         run: |
-          printf 'y\ny\ny\n' | flet build apk --verbose
+          yes | flet build apk --verbose --no-pyinstaller-boost || yes | flet build apk --verbose
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
