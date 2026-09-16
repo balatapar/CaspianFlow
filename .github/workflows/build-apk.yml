@@ -11,15 +11,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       - name: Set up Python 3.10
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.4.0
         with:
           python-version: "3.10"
 
       - name: Set up Java 17
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v5.5.0
         with:
           distribution: "temurin"
           java-version: "17"
@@ -42,8 +42,8 @@ jobs:
       - name: Install Flet Dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install flet
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install "flet==0.86.5"
+          if [ -f requirements.txt ]; then grep -v -i "^pyinstaller" requirements.txt > requirements-android.txt; pip install -r requirements-android.txt; fi
 
       - name: Build APK Strategy
         run: |
@@ -69,7 +69,7 @@ jobs:
           fi
 
       - name: Upload APK Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.4.0
         with:
           name: CaspianWeather-APK
           path: build/apk/*.apk
