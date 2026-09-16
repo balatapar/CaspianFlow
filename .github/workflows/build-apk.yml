@@ -54,15 +54,15 @@ jobs:
           # Build APK using flet
           yes | flet build apk --verbose
           
-          # Find and move the generated APK
+          # The APK is already in build/apk/, verify and rename
           mkdir -p build/apk
-          APK_PATH=$(find . -maxdepth 4 -type f -name "*.apk" -not -path "*/build/apk/*" | head -n 1)
-          if [ -n "$APK_PATH" ]; then
+          if ls build/apk/*.apk 1>/dev/null 2>&1; then
+            APK_PATH=$(find build/apk -maxdepth 1 -type f -name "*.apk" | head -n 1)
             mv "$APK_PATH" build/apk/CaspianFlow-release.apk
-            echo "APK moved to build/apk/CaspianFlow-release.apk"
+            echo "APK ready at build/apk/CaspianFlow-release.apk"
             ls -lh build/apk/
           else
-            echo "ERROR: APK not found after build."
+            echo "ERROR: APK not found in build/apk/ after build."
             exit 1
           fi
 
