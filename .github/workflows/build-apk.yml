@@ -43,6 +43,28 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
+          
+          # Fix flet-charts bug: it references flet via a non-existent relative path
+          # (path: ../../../../../../../packages/flet). Patch it to use the published
+          # version instead so flutter pub get can resolve it in CI.
+          CHARTS_PUBSPEC=$(python -c "
+import importlib.metadata, pathlib
+base = str(importlib.metadata.distribution('flet-charts').locate_file(''))
+print(pathlib.Path(base) / 'flutter' / 'flet_charts' / 'pubspec.yaml')
+")
+          echo "Patching $CHARTS_PUBSPEC"
+          python -c "
+from pathlib import Path
+p = Path('$CHARTS_PUBSPEC'.replace('\\\\','/'))
+text = p.read_text()
+text = text.replace(
+    '    path: ../../../../../../../packages/flet',
+    '    version: ^0.86.5'
+)
+p.write_text(text)
+print('Patched pubspec.yaml:')
+print(p.read_text())
+"
 
       - name: Build APK Strategy
         run: |
