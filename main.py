@@ -59,25 +59,29 @@ def weather_label(code: int | None) -> str:
 class CaspianWeatherApp(ft.Container):
     def __init__(self, page: ft.Page):
         # --- CRITICAL FIX START ---
-        # Store page in _page to avoid 'property has no setter' error.
-        # Flet's internal 'page' property is read-only when assigned directly
-        # on custom Container subclasses in certain versions.
         self._page = page
-        # IMPORTANT: Do NOT write 'self.page = page' here, it will raise:
-        #   ValueError: property 'page' of 'CaspianWeatherApp' object has no setter
         # --- CRITICAL FIX END ---
 
         super().__init__(expand=True, bgcolor=BG)
 
-        # Initialize settings and state using self._page access patterns later
         self.settings = load_settings()
         self.favorites = self.settings.get("favorites", DEFAULT_FAVORITES)
         self.selected_models = set(self.settings.get("models", ["gfs_seamless"]))
 
-        # UI Components references (created lazily or here)
+        # Detect mobile platform
+        self._is_mobile = False
+        try:
+            platform = (getattr(page, "platform", "") or "").lower()
+            width = getattr(page, "width", None) or 1100
+            self._is_mobile = platform in ("android", "ios") or width < 600
+        except Exception:
+            pass
+
+        self._sidebar_open = not self._is_mobile
+
+        # UI Components references
         self.favorite_dropdown = ft.Dropdown(
-            label="شهرهای ذخیره‌شده",
-            # options will be populated later
+            label="شهرهای ذخیرهشده",
             color=TEXT, bgcolor=FIELD_BG, border_color="#5a6658", focused_border_color=TEAL,
         )
         self.location_name = ft.TextField(
@@ -118,10 +122,10 @@ class CaspianWeatherApp(ft.Container):
         self.daily_view = ft.Column(expand=True, scroll=ft.ScrollMode.AUTO, spacing=12)
         self.weekly_view = WeeklyAnalysisView()
 
-        # Buttons (fresh instance per placement: a Control can only have one parent)
+        # Buttons
         self.sidebar_refresh_btn = action_button(Strings.REFRESH, on_click=lambda _: self.refresh_from_fields(), icon=ft.Icons.REFRESH, bgcolor=BLUE, color=BG)
         self.save_btn = action_button(Strings.SAVE_SETTINGS, on_click=self._save_settings, bgcolor=BLUE, color=BG)
-        self.use_favorite_btn = action_button("استفاده از شهر انتخاب‌شده", on_click=self._use_favorite, bgcolor=TEAL, color=BG)
+        self.use_favorite_btn = action_button("استفاده از شهر انتخابشده", on_click=self._use_favorite, bgcolor=TEAL, color=BG)
 
         # Build layout
         self._build_sidebar()
@@ -154,10 +158,6 @@ class CaspianWeatherApp(ft.Container):
                 pass
 
     def _build_sidebar(self):
-        # Sidebar uses self._page for any callbacks if needed, but primarily builds UI.
-        # We use ft.Column/Row etc. which don't strictly require self._page during init
-        # except for things like page.update() which we'll call later.
-        
         # Populate favorite dropdown options
         self.favorite_dropdown.options = [ft.dropdown.Option(key=str(i), text=f["name"]) for i, f in enumerate(self.favorites)]
 
@@ -165,6 +165,7 @@ class CaspianWeatherApp(ft.Container):
             width=280,
             bgcolor="#161a14",
             padding=16,
+            visible=not self._is_mobile,
             content=ft.ListView(
                 expand=True,
                 spacing=10,
@@ -193,7 +194,21 @@ ft.Column(list(self.model_checks.values()), spacing=2),
             )
         )
 
+    def _toggle_sidebar(self, e):
+        self._sidebar_open = not self._sidebar_open
+        self.sidebar.visible = self._sidebar_open
+        if self._page:
+            self._page.update()
+
     def _build_main_area(self):
+        # Hamburger menu button (mobile only)
+        self.menu_button = ft.IconButton(
+            icon=ft.Icons.MENU,
+            on_click=self._toggle_sidebar,
+            icon_color=TEXT,
+            visible=self._is_mobile,
+        )
+
         # Tabs (Flet 0.86 API: Tabs(length, content=Column(TabBar, TabBarView)))
         self.tabs = ft.Tabs(
             length=2,
@@ -210,7 +225,7 @@ ft.Column(list(self.model_checks.values()), spacing=2),
                         indicator_color="#7fb069",
                         divider_color="#4a5548",
                         tabs=[
-                            ft.Tab(label=ft.Row([ft.Icon(ft.Icons.DASHBOARD, size=16), ft.Text("📊 داشبورد و پیش‌بینی")])),
+                            ft.Tab(label=ft.Row([ft.Icon(ft.Icons.DASHBOARD, size=16), ft.Text("📊 داشبورد و پیشبینی")])),
                             ft.Tab(label=ft.Row([ft.Icon(ft.Icons.AUTO_AWESOME, size=16), ft.Text("📝 تحلیل سینوپتیک هفتگی")])),
                         ],
                     ),
@@ -223,18 +238,45 @@ ft.Column(list(self.model_checks.values()), spacing=2),
         )
 
         # Main content area
-        self.main_content = ft.Container(
+        main_content = ft.Container(
             expand=True,
             bgcolor=BG,
             padding=12,
             content=self.tabs
         )
 
-        # The big Row: [Sidebar, Divider, Main]
-        self.content = ft.Row(
-            [self.sidebar, ft.VerticalDivider(width=1, color="#4a5548"), self.main_content],
-            expand=True, spacing=0
+        # Mobile top bar with hamburger
+        self.mobile_top_bar = ft.Container(
+            padding=8,
+            bgcolor=BG_CARD,
+            content=ft.Row([
+                self.menu_button,
+                ft.Text(Strings.APP_TITLE, size=16, weight=ft.FontWeight.BOLD, color=TEXT, expand=True),
+            ]),
+            visible=self._is_mobile,
         )
+
+        if self._is_mobile:
+            # On mobile: sidebar overlays main content when open
+            self.sidebar_overlay = ft.Container(
+                content=self.sidebar,
+                width=280,
+                bgcolor="#161a14",
+                visible=self._sidebar_open,
+            )
+            self.content = ft.Stack([
+                ft.Column([
+                    self.mobile_top_bar,
+                    main_content,
+                ], expand=True),
+                self.sidebar_overlay,
+            ], expand=True)
+        else:
+            # Desktop: standard sidebar + main layout
+            self.content = ft.Row(
+                [self.sidebar, ft.VerticalDivider(width=1, color="#4a5548"), main_content],
+                expand=True, spacing=0
+            )
 
     async def load_weather(self):
         """Fetches weather data and updates the UI."""
