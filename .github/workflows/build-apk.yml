@@ -69,3 +69,13 @@ jobs:
         with:
           name: CaspianWeather-APK
           path: build/apk/*.apk
+
+      - name: Create GitHub Release with APK
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: build-${{ github.sha }}
+          name: CaspianWeather ${{ github.sha }}
+          body: Automated APK build from commit ${{ github.sha }}
+          files: build/apk/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
