@@ -46,27 +46,21 @@ jobs:
 
       - name: Build APK Strategy
         run: |
-          # ۱. تایید خودکار پرامپتها و ساخت ساختار اولیه فلاتر
-          yes | flet build apk --verbose || true
-          
-          # ۲. پچ کردن باگ pubspec فlet-charts در پروژه تولیدشده
+          # پچ کردن باگ pubspec فlet-charts در site-packages قبل از بیلد
+          # (flet build apk فایلهای پلاگین را از اینجا کپی میکند)
           python scripts/patch_flet_charts_pubspec.py
           
-          # ۳. ساخت پوشه خروجی مطمئن
-          mkdir -p build/apk
-
-          # ۴. پیدا کردن پروژه فلاتر تولید شده و بیلد مستقیم
-          FLUTTER_DIR=$(find . -maxdepth 4 -type f -name "pubspec.yaml" -not -path "*/.*" -exec dirname {} \; | head -n 1)
+          # ساخت APK توسط flet
+          yes | flet build apk --verbose
           
-          if [ -n "$FLUTTER_DIR" ]; then
-            echo "Found Flutter project at $FLUTTER_DIR"
-            cd "$FLUTTER_DIR"
-            flutter pub get
-            flutter build apk --release
-            cd "$GITHUB_WORKSPACE"
-            cp "$FLUTTER_DIR/build/app/outputs/flutter-apk/app-release.apk" build/apk/CaspianFlow-release.apk
+          # کپی کردن خروجی به پوشه build/apk
+          mkdir -p build/apk
+          APK_PATH=$(find build -maxdepth 3 -type f -name "*.apk" | head -n 1)
+          if [ -n "$APK_PATH" ]; then
+            cp "$APK_PATH" build/apk/CaspianFlow-release.apk
+            echo "APK copied to build/apk/CaspianFlow-release.apk"
           else
-            echo "ERROR: Flutter project template could not be found."
+            echo "ERROR: APK not found after build."
             exit 1
           fi
 
