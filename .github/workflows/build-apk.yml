@@ -40,9 +40,9 @@ jobs:
           pip install flet
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Build APK with Flet
+      - name: Build APK with Flet (Auto-Confirm)
         run: |
-          flet build apk --verbose
+          printf 'y\ny\ny\n' | flet build apk --verbose
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
