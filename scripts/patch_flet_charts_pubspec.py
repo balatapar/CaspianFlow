@@ -3,6 +3,7 @@ from pathlib import Path
 
 OVERRIDE_BLOCK = """dependency_overrides:
   vector_math: ^2.2.0
+  collection: ^1.19.0
 """
 
 
@@ -21,7 +22,7 @@ def patch_pubspec(pubspec: Path) -> None:
         )
 
     if is_root_pubspec(text) and "dependency_overrides:" not in text:
-        print(f"Adding vector_math override to {pubspec}")
+        print(f"Adding version overrides to {pubspec}")
         if "dev_dependencies:" in text:
             text = text.replace(
                 "dev_dependencies:",
@@ -46,7 +47,6 @@ def main() -> None:
         print("No pubspec.yaml found under build/")
         return
 
-    # Only patch the root app pubspec (the one that is a Flutter app, not a package)
     root_pubspecs = [p for p in pubspecs if is_root_pubspec(p.read_text())]
     targets = root_pubspecs if root_pubspecs else pubspecs
 
