@@ -49,22 +49,38 @@ jobs:
       - name: Build APK Strategy
         run: |
           # پچ کردن باگ pubspec فlet-charts در site-packages قبل از بیلد
-          # (flet build apk فایلهای پلاگین را از اینجا کپی میکند)
           python scripts/patch_flet_charts_pubspec.py
           
-          # ساخت APK توسط flet
-          yes | flet build apk --verbose
+          # ساخت پروژه فلاتر توسط flet (بدون بیلد خودکار APK)
+          yes | flet build --verbose
           
-          # پیدا کردن و جابجایی APK به پوشه خروجی (جابجایی نه کپی برای جلوگیری از فایل تکراری)
-          mkdir -p build/apk
-          APK_PATH=$(find build -maxdepth 3 -type f -name "*.apk" | head -n 1)
-          if [ -n "$APK_PATH" ]; then
-            mv "$APK_PATH" build/apk/CaspianFlow-release.apk
-            echo "APK moved to build/apk/CaspianFlow-release.apk"
-          else
-            echo "ERROR: APK not found after build."
+          # پیدا کردن پروژه فلاتر تولید شده
+          FLUTTER_DIR=$(find . -maxdepth 3 -type f -name "pubspec.yaml" -not -path "*/.*" -exec dirname {} \; | head -n 1)
+          
+          if [ -z "$FLUTTER_DIR" ]; then
+            echo "ERROR: Flutter project not found."
             exit 1
           fi
+          
+          echo "Found Flutter project at $FLUTTER_DIR"
+          cd "$FLUTTER_DIR"
+          
+          # پچ کردن pubspec در پروژه تولیدشده
+          python "$GITHUB_WORKSPACE/scripts/patch_flet_charts_pubspec.py" || true
+          
+          # ساخت جداگانه APK برای هر معماری (arm64-v8a, armeabi-v7a, x86_64)
+          flutter pub get
+          flutter build apk --release --split-per-abi
+          
+          cd "$GITHUB_WORKSPACE"
+          mkdir -p build/apk
+          
+          # کپی کردن همه APKهای تولید شده
+          find "$FLUTTER_DIR/build/app/outputs/flutter-apk" -name "*.apk" -exec cp {} build/apk/ \;
+          
+          # لیست APKهای تولید شده
+          echo "Generated APKs:"
+          ls -lh build/apk/
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4.4.0
@@ -72,7 +88,7 @@ jobs:
           name: CaspianWeather-APK
           path: build/apk/*.apk
 
-      - name: Create GitHub Release with APK
+      - name: Create GitHub Release with APKs
         uses: softprops/action-gh-release@v1
         with:
           tag_name: build-${{ github.sha }}

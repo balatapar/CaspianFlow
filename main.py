@@ -47,8 +47,8 @@ TEAL = "#7fb069"
 FIELD_BG = "#353d31"
 
 WEATHER_LABELS = {
-    0: "آسمان صاف", 1: "کمی ابری", 2: "نیمهابری", 3: "ابری",
-    45: "مهآلود", 48: "مه یخزده", 51: "نمنم باران", 53: "بارش پراکنده",
+    0: "آسمان صاف", 1: "کمی ابری", 2: "نیمه‌ابری", 3: "ابری",
+    45: "مه‌آلود", 48: "مه یخ‌زده", 51: "نم‌نم باران", 53: "بارش پراکنده",
     61: "باران سبک", 63: "باران", 65: "باران شدید", 71: "برف سبک",
     73: "برف", 80: "رگبار پراکنده", 95: "رعدوبرق", 99: "رعدوبرق و تگرگ شدید"
 }
@@ -81,7 +81,7 @@ class CaspianWeatherApp(ft.Container):
 
         # UI Components references
         self.favorite_dropdown = ft.Dropdown(
-            label="شهرهای ذخیرهشده",
+            label="شهرهای ذخیره‌شده",
             color=TEXT, bgcolor=FIELD_BG, border_color="#5a6658", focused_border_color=TEAL,
         )
         self.location_name = ft.TextField(
@@ -125,7 +125,7 @@ class CaspianWeatherApp(ft.Container):
         # Buttons
         self.sidebar_refresh_btn = action_button(Strings.REFRESH, on_click=lambda _: self.refresh_from_fields(), icon=ft.Icons.REFRESH, bgcolor=BLUE, color=BG)
         self.save_btn = action_button(Strings.SAVE_SETTINGS, on_click=self._save_settings, bgcolor=BLUE, color=BG)
-        self.use_favorite_btn = action_button("استفاده از شهر انتخابشده", on_click=self._use_favorite, bgcolor=TEAL, color=BG)
+        self.use_favorite_btn = action_button("استفاده از شهر انتخاب‌شده", on_click=self._use_favorite, bgcolor=TEAL, color=BG)
 
         # Build layout
         self._build_sidebar()
@@ -137,7 +137,24 @@ class CaspianWeatherApp(ft.Container):
         ]
 
     def did_mount(self):
-        # Called once the control is attached to the page: safe place to fetch data.
+        # Detect actual platform/width now that page is mounted
+        try:
+            platform = (getattr(self._page, "platform", "") or "").lower()
+            width = getattr(self._page, "width", None) or 1100
+            is_mobile = platform in ("android", "ios") or width < 600
+        except Exception:
+            is_mobile = False
+
+        if is_mobile != self._is_mobile:
+            self._is_mobile = is_mobile
+            self._sidebar_open = not is_mobile
+            # Rebuild layout for detected platform
+            self._build_sidebar()
+            self._build_main_area()
+            if self._page:
+                self._page.update()
+
+        # Fetch weather data
         try:
             if self._page:
                 self._page.run_task(self.load_weather)
@@ -181,7 +198,7 @@ ft.Row([ft.Image(src="/branding/caspian-weather-icon.png", width=36, height=36),
                     self.location_name,
 ft.Row([self.latitude, self.longitude], spacing=6),
                     self.timezone,
-                    ft.TextButton("ذخیره این شهر در علاقه‌مندی‌ها", on_click=self._save_favorite_click, tooltip="شهر جاری را ذخیره کن"),
+                    ft.TextButton("ذخیره این شهر در علاقمندی‌ها", on_click=self._save_favorite_click, tooltip="شهر جاری را ذخیره کن"),
                     ft.Divider(color="#4a5548"),
                     ft.Text("مدل‌های پیش‌بینی", size=13, weight=ft.FontWeight.BOLD, color=TEXT),
 ft.Column(list(self.model_checks.values()), spacing=2),
@@ -225,7 +242,7 @@ ft.Column(list(self.model_checks.values()), spacing=2),
                         indicator_color="#7fb069",
                         divider_color="#4a5548",
                         tabs=[
-                            ft.Tab(label=ft.Row([ft.Icon(ft.Icons.DASHBOARD, size=16), ft.Text("📊 داشبورد و پیشبینی")])),
+                            ft.Tab(label=ft.Row([ft.Icon(ft.Icons.DASHBOARD, size=16), ft.Text("📊 داشبورد و پیش‌بینی")])),
                             ft.Tab(label=ft.Row([ft.Icon(ft.Icons.AUTO_AWESOME, size=16), ft.Text("📝 تحلیل سینوپتیک هفتگی")])),
                         ],
                     ),
