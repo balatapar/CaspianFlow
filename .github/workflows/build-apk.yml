@@ -51,13 +51,16 @@ jobs:
 
       - name: Build APK Strategy
         run: |
-          # ۱. تایید خودکار پرامپت‌ها و ساخت ساختار اولیه فلاتر
+          # ۱. تایید خودکار پرامپتها و ساخت ساختار اولیه فلاتر
           yes | flet build apk --verbose || true
           
-          # ۲. ساخت پوشه خروجی مطمئن
+          # ۲. پچ کردن باگ pubspec فlet-charts در پروژه تولیدشده
+          python scripts/patch_flet_charts_pubspec.py
+          
+          # ۳. ساخت پوشه خروجی مطمئن
           mkdir -p build/apk
 
-          # ۳. پیدا کردن پروژه فلاتر تولید شده و بیلد مستقیم
+          # ۴. پیدا کردن پروژه فلاتر تولید شده و بیلد مستقیم
           FLUTTER_DIR=$(find . -maxdepth 4 -type f -name "pubspec.yaml" -not -path "*/.*" -exec dirname {} \; | head -n 1)
           
           if [ -n "$FLUTTER_DIR" ]; then
