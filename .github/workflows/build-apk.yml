@@ -24,6 +24,12 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.22.x"
+          channel: "stable"
+
       - name: Install System Dependencies
         run: |
           sudo apt-get update
@@ -33,22 +39,23 @@ jobs:
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - name: Install Flet
+      - name: Install Flet Dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install flet
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Create Flet App Bundle & Build APK
+      - name: Build APK
         run: |
-          python -m flet build apk --project-name CaspianFlow --verbose || true
+          flet build apk --verbose || true
           if [ ! -f build/apk/*.apk ]; then
-            # fallback in case CLI fails, create flutter project wrapper
+            echo "Fallback to direct Flutter build..."
             flet create --template app .flet_temp
             cd .flet_temp
             flutter build apk --release
-            mkdir -p ../build/apk
-            cp build/app/outputs/flutter-apk/app-release.apk ../build/apk/
+            cd ..
+            mkdir -p build/apk
+            cp .flet_temp/build/app/outputs/flutter-apk/app-release.apk build/apk/CaspianFlow-release.apk
           fi
 
       - name: Upload APK Artifact
