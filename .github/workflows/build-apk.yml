@@ -43,11 +43,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
-          
-          # Fix flet-charts bug: it references flet via a non-existent relative path
-          # (path: ../../../../../../../packages/flet). Patch it to use the published
-          # version instead so flutter pub get can resolve it in CI.
-          python scripts/patch_flet_charts_pubspec.py
 
       - name: Build APK Strategy
         run: |
