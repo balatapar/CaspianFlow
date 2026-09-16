@@ -24,6 +24,15 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
+      - name: Install System & Linux GUI Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libgles2-mesa-dev mesa-utils ninja-build pkg-config clang cmake
+
+      - name: Accept Android Licenses
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
       - name: Install Flet & Dependencies
         run: |
           python -m pip install --upgrade pip
