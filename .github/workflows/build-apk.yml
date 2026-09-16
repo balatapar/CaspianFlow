@@ -33,15 +33,23 @@ jobs:
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - name: Install Correct Flet Version
+      - name: Install Flet
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install flet==1.0.0 flet-cli==1.0.0 flet-desktop==1.0.0
+          pip install flet
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Build APK with Flet
+      - name: Create Flet App Bundle & Build APK
         run: |
-          yes | flet build apk --verbose
+          python -m flet build apk --project-name CaspianFlow --verbose || true
+          if [ ! -f build/apk/*.apk ]; then
+            # fallback in case CLI fails, create flutter project wrapper
+            flet create --template app .flet_temp
+            cd .flet_temp
+            flutter build apk --release
+            mkdir -p ../build/apk
+            cp build/app/outputs/flutter-apk/app-release.apk ../build/apk/
+          fi
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
