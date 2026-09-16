@@ -55,12 +55,12 @@ jobs:
           # ساخت APK توسط flet
           yes | flet build apk --verbose
           
-          # کپی کردن خروجی به پوشه build/apk
+          # پیدا کردن و جابجایی APK به پوشه خروجی (جابجایی نه کپی برای جلوگیری از فایل تکراری)
           mkdir -p build/apk
           APK_PATH=$(find build -maxdepth 3 -type f -name "*.apk" | head -n 1)
           if [ -n "$APK_PATH" ]; then
-            cp "$APK_PATH" build/apk/CaspianFlow-release.apk
-            echo "APK copied to build/apk/CaspianFlow-release.apk"
+            mv "$APK_PATH" build/apk/CaspianFlow-release.apk
+            echo "APK moved to build/apk/CaspianFlow-release.apk"
           else
             echo "ERROR: APK not found after build."
             exit 1
